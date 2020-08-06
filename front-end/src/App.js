@@ -1,40 +1,47 @@
-import './App.css';
-import React from "react";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
-import Signup from './components/Signup'
-import Signin from './components/Signin'
-
+import "./App.css";
+import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import Signup from "./components/Signup";
+import Signin from "./components/Signin";
 
 export default function App() {
+  const [isLogin, setIslogin] = useState(false);
+  let navLi;
+  if (!isLogin) {
+    navLi = (
+      <ul>
+        <li>
+          <Link to="/">Home</Link>
+        </li>
+        <li>
+          <Link to="/signin">Sign In</Link>
+        </li>
+      </ul>
+    );
+  } else {
+    navLi = (
+      <ul>
+        <li>
+          <Link to="/">Home</Link>
+        </li>
+        <li>
+          <Link to="/users">Users</Link>
+        </li>
+        <li>
+          <Link to="/signin">Sign In</Link>
+        </li>
+      </ul>
+    );
+  }
   return (
     <Router>
       <div className="AppContainer">
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            {/* <li>
-              <Link to="/signup">Sign Up</Link>
-            </li> */}
-            <li>
-              <Link to="/users">Users</Link>
-            </li>
-            <li>
-              <Link to="/signin">Sign In</Link>
-            </li>
-          </ul>
-        </nav>
+        <nav>{navLi}</nav>
 
         {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
         <Switch>
-        <Route path="/signin">
+          <Route path="/signin">
             <Signin />
           </Route>
           <Route path="/signup">
