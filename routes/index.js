@@ -1,9 +1,31 @@
-var express = require('express');
+var express = require("express");
 var router = express.Router();
+const User = require("../models/user");
+const generateJWT = require("../function/tokenCheck");
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+// router.get('/', function(req, res, next) {
+//   res.render('index', { title: 'Express' });
+// });
+
+router.post("/signin", function (req, res) {
+  console.log(req.body);
+  const username = req.body.username;
+  const password = req.body.password;
+  User.findOne({ where: { username: username } })
+    .then(function (users) {
+      if (!users) {
+        res.send("Incorrect username")
+      }
+      if (!users.password === password) {
+        res.send("Incorrect password.");
+      }
+
+      console.log("Get")
+      const token = generateJWT(users)
+      res.status(200).json(token);
+    })
+    .catch((err) => done(err));
 });
 
 module.exports = router;
