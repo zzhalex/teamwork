@@ -1,7 +1,7 @@
 var express = require("express");
 var router = express.Router();
 const User = require("../models/user");
-const generateJWT = require("../function/tokenCheck");
+const {generateJWT,decodeJWT} = require("../function/tokenCheck");
 
 /* GET home page. */
 // router.get('/', function(req, res, next) {
@@ -23,9 +23,11 @@ router.post("/signin", function (req, res) {
 
       console.log("Get")
       const token = generateJWT(users)
+      // const decodeToken = decodeJWT(token);
+      // console.log(decodedToken.username,decodedToken.id)
       res.status(200).json(token);
     })
-    .catch((err) => done(err));
+    .catch((err) => res.send(err));
 });
 
 module.exports = router;

@@ -1,11 +1,10 @@
 const jwt = require("jsonwebtoken");
-const { model } = require("../db/dbconnection");
 
- module.exports =  function(user) {
+exports.generateJWT = function (user) {
   const tokenData = { username: user.username, id: user.id };
   return jwt.sign({ user: tokenData }, "teamwork");
-}
+};
 
-module.exports = function(){
-    
-}
+exports.decodeJWT = function (token) {
+  return (decoded = jwt.verify(token, "teamwork",{expiresIn:600000}));
+};
