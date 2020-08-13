@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Signup from "./components/Signup";
 import Signin from "./components/Signin";
+import Dashboard from "./components/Dashboard";
 
 export default function App() {
   const [isLogin, setIslogin] = useState(false);
@@ -60,7 +61,11 @@ export default function App() {
 }
 
 function Home() {
-  return <h2>Home</h2>;
+  return (
+    <React.Fragment>
+      <Dashboard />
+    </React.Fragment>
+  );
 }
 
 function About() {

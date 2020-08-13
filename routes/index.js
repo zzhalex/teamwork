@@ -1,7 +1,7 @@
 var express = require("express");
 var router = express.Router();
 const User = require("../models/user");
-const {generateJWT,decodeJWT} = require("../function/tokenCheck");
+const { generateJWT, decodeJWT } = require("../function/tokenCheck");
 
 /* GET home page. */
 // router.get('/', function(req, res, next) {
@@ -15,17 +15,18 @@ router.post("/signin", function (req, res) {
   User.findOne({ where: { username: username } })
     .then(function (users) {
       if (!users) {
-        res.send("Incorrect username")
+        res.send("Incorrect username");
       }
       if (!users.password === password) {
         res.send("Incorrect password.");
       }
 
-      console.log("Get")
-      const token = generateJWT(users)
+      console.log("Get");
+      const token = generateJWT(users);
+      console.log(token);
       // const decodeToken = decodeJWT(token);
       // console.log(decodedToken.username,decodedToken.id)
-      res.status(200).json(token);
+      res.send(token);
     })
     .catch((err) => res.send(err));
 });
