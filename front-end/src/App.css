@@ -16,7 +16,7 @@ nav ul {
   display: flex;
   height: 100%;
 
-  justify-content:flex-end;
+  justify-content: flex-end;
 }
 
 nav li {
@@ -30,4 +30,10 @@ nav a {
   text-decoration: none;
   color: #fff;
   font-size: 16px;
+}
+
+.Dashboard {
+  height: 100%;
+  width: 100%;
+  padding: 10px;
 }
