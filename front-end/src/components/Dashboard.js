@@ -33,13 +33,15 @@ export default function Dashboard() {
   // updatedAt: "2020-08-12T06:54:24.287Z"
   function taskDiv(task) {
     let dueDate = new Date(task.duedate);
+    let name = task.name.charAt(0).toUpperCase() + task.name.slice(1);
+
     return (
       <div
         key={task.id}
         className="Task max-w-sm rounded overflow-hidden shadow-lg"
       >
         <div className="px-6 py-4">
-          <div className="TaskName font-bold text-xl mb-2">{task.name}</div>
+          <div className="TaskName font-bold text-xl mb-2">{name}</div>
           <p className="TaskDesc text-gray-700 text-base">{task.description}</p>
         </div>
         <div className="px-6 py-4">
