@@ -4,7 +4,7 @@ var router = express.Router();
 const db = require("../db/dbconnection");
 // const Task = require("../models/task");
 
-const { TaskUsers, Task, User } = require("../models/taskuser");
+const { Taskusers, Task, User } = require("../models/taskuser");
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
 
@@ -19,6 +19,7 @@ router.get("/", function (req, res, next) {
     where: {
       owner: user.id,
     },
+    order: [["createdAt", "DESC"]],
   })
     .then((data) => {
       res.send(data);
@@ -26,6 +27,7 @@ router.get("/", function (req, res, next) {
     .catch((err) => res.send(err));
 });
 
+router.delete("/{id}", function (req, res, next) {});
 router.post("/add", function (req, res, next) {
   let { name, description, owner, partner, duedate } = req.body;
   Task.create({
@@ -35,7 +37,21 @@ router.post("/add", function (req, res, next) {
     partner,
     duedate,
   })
-    .then(() => res.status(200).json({ message: "New task created!" }))
+    .then(async (task) => {
+      let partnerArr = JSON.parse(partner);
+      console.log(partnerArr);
+      //for(let i = 0; i<partnerArr.length;i++){
+      let users = await User.findAll({
+        where: {
+          id: partnerArr,
+        },
+      });
+      console.log(users);
+      await task.addUsers(users);
+      //}
+
+      res.status(200).json({ message: "New task created!" });
+    })
     .catch((err) => res.send(err));
 });
 module.exports = router;
