@@ -15,11 +15,13 @@ router.get("/", function (req, res, next) {
   let token = req.headers.authorization;
   let user = decodeJWT(token).user;
   console.log(user.username, user.id);
-  Task.findAll({
+  Task.findAndCountAll({
     where: {
       owner: user.id,
     },
     order: [["createdAt", "DESC"]],
+    limit: 12,
+    offset: 0,
   })
     .then((data) => {
       res.send(data);
