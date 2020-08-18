@@ -31,4 +31,10 @@ router.post("/signin", function (req, res) {
     .catch((err) => res.send(err));
 });
 
+router.get("/checkToken", function (req, res) {
+  let token = req.headers.authorization;
+  let user = decodeJWT(token).user;
+  res.send(user);
+});
+
 module.exports = router;
