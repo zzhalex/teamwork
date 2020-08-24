@@ -45,7 +45,13 @@ router.post("/add", function (req, res, next) {
     email,
     password,
   })
-    .then(() => res.send("Done"))
+    .then((users) => {
+      const token = generateJWT(users);
+      console.log(token);
+      // const decodeToken = decodeJWT(token);
+      // console.log(decodedToken.username,decodedToken.id)
+      res.send(token);
+    })
     .catch((err) => res.send(err));
 });
 

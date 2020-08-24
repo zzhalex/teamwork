@@ -56,4 +56,22 @@ router.post("/add", function (req, res, next) {
     })
     .catch((err) => res.send(err));
 });
+
+router.get("/:id", function (req, res) {
+  console.log(req.params);
+  let id = req.params.id;
+  console.log("ID:" + id);
+  Task.findOne({
+    where: {
+      id: id,
+    },
+  })
+    .then((data) => {
+      console.log(data);
+      res.send(data);
+    })
+    .catch((err) => {
+      res.send(err);
+    });
+});
 module.exports = router;
