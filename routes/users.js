@@ -11,13 +11,14 @@ const {
   decodeJWT
 } = require("../function/tokenCheck");
 
+const {
+  getUsers,
+  getUserById,
+  addUser
+} = require("../controller/user")
 /* GET users listing. */
-router.get("/", function(req, res, next) {
-  User.findAll()
-    .then((data) => {
-      res.send(data);
-    })
-    .catch((err) => res.send(err));
+router.get("/all", function(req, res, next) {
+  getUsers(req, res, next);
 });
 
 router.post("/add", function(req, res, next) {
@@ -56,36 +57,11 @@ router.post("/add", function(req, res, next) {
       text: "Please add password"
     });
   }
-
-  User.create({
-      username,
-      firstname,
-      lastname,
-      email,
-      password,
-    })
-    .then((users) => {
-      const token = generateJWT(users);
-      console.log(token);
-      // const decodeToken = decodeJWT(token);
-      // console.log(decodedToken.username,decodedToken.id)
-      res.send(token);
-    })
-    .catch((err) => res.send(err));
+  addUser(req, res, next);
 });
 
-router.get("/info", function(req, res) {
-  let token = req.headers.authorization;
-  let user = decodeJWT(token).user;
-  User.findOne({
-      where: {
-        id: user.id,
-      },
-    })
-    .then((data) => {
-      res.send(data);
-    })
-    .catch((err) => res.send(err));
+router.get("/info", function(req, res, next) {
+  getUserById(req, res, next);
 });
 
 module.exports = router;
