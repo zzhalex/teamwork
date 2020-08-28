@@ -18,7 +18,6 @@ module.exports = {
 	getTasks: function(req, res, next) {
 		let token = req.headers.authorization;
 		let user = decodeJWT(token).user;
-		//console.log(user.username, user.id);
 		Task.findAndCountAll({
 				where: {
 					owner: user.id,
