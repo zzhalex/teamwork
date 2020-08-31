@@ -3,7 +3,8 @@ const router = express.Router();
 const {
 	getTasks,
 	getTaskById,
-	createTask
+	createTask,
+	deleteTaskById
 } = require("../controller/task")
 
 /*Task API*/
@@ -11,7 +12,9 @@ router.get("/", function(req, res, next) {
 	getTasks(req, res, next);
 });
 
-router.delete("/{id}", function(req, res, next) {});
+router.delete("/:id", function(req, res, next) {
+	deleteTaskById(req, res, next)
+});
 router.post("/add", function(req, res, next) {
 	createTask(req, res, next);
 });

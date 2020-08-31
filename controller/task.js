@@ -78,5 +78,22 @@ module.exports = {
 				});
 			})
 			.catch((err) => res.send(err));
+	},
+	deleteTaskById: function(req, res, next) {
+		let id = req.params.id;
+		Task.destroy({
+				where: {
+					id: id,
+				},
+			})
+			.then((data) => {
+				console.log(data);
+				res.status(200).json({
+					message: "The task is deleted!"
+				});
+			})
+			.catch((err) => {
+				res.send(err);
+			});
 	}
 };
