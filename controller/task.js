@@ -16,8 +16,11 @@ const {
 
 module.exports = {
 	getTasks: function(req, res, next) {
+		console.log("HERE WE GO")
 		let token = req.headers.authorization;
+		console.log(token)
 		let user = decodeJWT(token).user;
+		console.log(user)
 		Task.findAndCountAll({
 				where: {
 					owner: user.id,
@@ -81,10 +84,21 @@ module.exports = {
 	},
 	deleteTaskById: function(req, res, next) {
 		let id = req.params.id;
+		let token = req.headers.authorization;
+		let user = decodeJWT(token);
 		Task.destroy({
 				where: {
 					id: id,
 				},
+				include: [{
+						model: taskusers,
+						where: {
+							taskId: id
+						}
+
+					}
+
+				]
 			})
 			.then((data) => {
 				console.log(data);

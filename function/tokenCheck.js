@@ -6,5 +6,5 @@ exports.generateJWT = function (user) {
 };
 
 exports.decodeJWT = function (token) {
-  return (decoded = jwt.verify(token, "teamwork",{expiresIn:600000}));
+  	return (decoded = jwt.verify(token, "teamwork",{expiresIn:600000}));
 };

@@ -4,7 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "nodemon ./bin/www"
+    "start": "nodemon ./bin/www",
+    "test": "jest"
   },
   "dependencies": {
     "@babel/core": "^7.11.1",
@@ -23,6 +24,7 @@
     "serve-favicon": "~2.4.5"
   },
   "devDependencies": {
+    "jest": "^26.4.2",
     "prettier": "^2.0.5"
   }
 }

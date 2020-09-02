@@ -9,6 +9,7 @@ const {
 
 /*Task API*/
 router.get("/", function(req, res, next) {
+	console.log("GET TASK")
 	getTasks(req, res, next);
 });
 
