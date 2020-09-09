@@ -17,6 +17,11 @@ const {
   addUser
 } = require("../controller/user")
 /* GET users listing. */
+
+router.use(function (req, res, next) {
+  console.log('Time:', Date.now())
+  next()
+})
 router.get("/all", function(req, res, next) {
   getUsers(req, res, next);
 });

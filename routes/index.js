@@ -3,6 +3,7 @@ var router = express.Router();
 const User = require("../models/user");
 const { generateJWT, decodeJWT } = require("../function/tokenCheck");
 
+
 router.post("/signin", function (req, res) {
   const username = req.body.username;
   const password = req.body.password;

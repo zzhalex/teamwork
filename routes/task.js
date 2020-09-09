@@ -6,7 +6,10 @@ const {
 	createTask,
 	deleteTaskById
 } = require("../controller/task")
-
+router.use(function (req, res, next) {
+  console.log('Time:', Date.now())
+  next()
+})
 /*Task API*/
 router.get("/", function(req, res, next) {
 	console.log("GET TASK")

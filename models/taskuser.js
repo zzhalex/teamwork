@@ -1,8 +1,14 @@
-const { Sequelize, DataTypes, Model } = require("sequelize");
+const {
+  Sequelize,
+  DataTypes,
+  Model
+} = require("sequelize");
 const db = require("../db/dbconnection");
 const User = require("./user");
 const Task = require("./task");
-const { sequelize } = require("./task");
+const {
+  sequelize
+} = require("./task");
 const Taskusers = sequelize.define("taskuser", {
   userId: {
     type: DataTypes.INTEGER,
@@ -20,11 +26,19 @@ const Taskusers = sequelize.define("taskuser", {
   },
 });
 
-User.belongsToMany(Task, { through: "taskusers" });
-Task.belongsToMany(User, { through: "taskusers" });
+User.belongsToMany(Task, {
+  through: "taskusers",
+  onDelete: 'cascade',
+  hooks: true
+});
+Task.belongsToMany(User, {
+  through: "taskusers",
+  onDelete: 'cascade',
+  hooks: true
+});
 
-Taskusers.sync().then(()=>{
-    console.log("TaskUsers Created")
+Taskusers.sync({force:true}).then(() => {
+  console.log("TaskUsers Created")
 });
 
 module.exports = {

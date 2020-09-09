@@ -16,9 +16,7 @@ const {
 
 module.exports = {
 	getTasks: function(req, res, next) {
-		console.log("HERE WE GO")
 		let token = req.headers.authorization;
-		console.log(token)
 		let user = decodeJWT(token).user;
 		console.log(user)
 		Task.findAndCountAll({
@@ -38,10 +36,19 @@ module.exports = {
 	},
 	getTaskById: function(req, res, next) {
 		let id = req.params.id;
-		console.log("ID:" + id);
+		let token = req.headers.authorization;
+		let userid = decodeJWT(token).user.id;
 		Task.findOne({
 				where: {
-					id: id,
+					[Op.and]: [{
+						id: {
+							[Op.eq]: id
+						}
+					}, {
+						owner: {
+							[Op.eq]: userid
+						}
+					}]
 				},
 			})
 			.then((data) => {
@@ -83,22 +90,22 @@ module.exports = {
 			.catch((err) => res.send(err));
 	},
 	deleteTaskById: function(req, res, next) {
+		console.log("DELETE")
 		let id = req.params.id;
 		let token = req.headers.authorization;
-		let user = decodeJWT(token);
+		let userid = decodeJWT(token).user.id;
 		Task.destroy({
 				where: {
-					id: id,
-				},
-				include: [{
-						model: taskusers,
-						where: {
-							taskId: id
+					[Op.and]: [{
+						id: {
+							[Op.eq]: id
 						}
-
-					}
-
-				]
+					}, {
+						owner: {
+							[Op.eq]: userid
+						}
+					}]
+				}
 			})
 			.then((data) => {
 				console.log(data);
